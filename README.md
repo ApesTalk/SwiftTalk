@@ -1,2 +1,9 @@
-# HugSwift
-Give swift a hug.
+# SwiftTalk
+
+Learning late is better than not learning. Learning is never too late.
+
+
+
+# License
+
+MIT
