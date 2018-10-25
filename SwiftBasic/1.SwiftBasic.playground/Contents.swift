@@ -61,6 +61,39 @@ if let v = Int("122"), let num = Int("200"), v < num { //v num必须是可选项
     print("v has value and it less than 200")
 }
 
+// # 隐式展开可选项：一旦被设值之后就会一直拥有值，此时可以去掉检查的需求，不需要每次访问时都展开
+let possibleStr: String? = "An optional string"
+let forcedStr: String = possibleStr! //需要展开
+let assumedStr: String! = "An implicitly unwrapped optional string" //确定有值
+let implicitStr: String = assumedStr //不再需要展开
+
+// # 错误处理
+func canThrowAnError() throws {
+    
+}
+
+do {
+    try canThrowAnError()
+    //no error
+}catch {
+    //has error
+}
+
+// # 断言和先决条件
+let age = 3
+assert(age >= 0, "A person's age cannot be less than zero")
+
+if age >= 0 {
+    print("You can ride the roller-coaster or the ferris wheel")
+}else{
+    assertionFailure("A person's age cannot be less than zero") //已做判断，用assertionFailure标明断言失败
+}
+
+// # 强制先决条件
+let index = 2
+let array = [1]
+precondition(index < array.count, "Index out of range")
+
 
 
 
