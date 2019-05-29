@@ -17,12 +17,12 @@ for i in 1...5 {
 }
 //半开区间
 let names = ["Anna", "Alex", "Brian", "Jack"]
-for i in 0..<name.count {
+for i in 0..<names.count {
     print(names[i])
 }
 //单侧区间
 for name in names[2...] {
-    print(names)
+    print(name)
 }
 for name in names[...2] {
     print(name)
