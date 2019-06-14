@@ -86,9 +86,14 @@ if let foundIndex = findIndex(of: "llama", in: strings) {
 
 
 // # 关联类型
+//关联类型给协议中用到的类型一个占位符名称。直到采纳协议时，才指定用于该关联类型的实际类型
 
 protocol Container {
     associatedtype ItemType
+    
+    //可以给关联类型添加约束
+//    associatedtype ItemType: Equatable
+    
     mutating func append(_ item: ItemType)
     var count: Int { get }
     subscript(i: Int) -> ItemType { get }
@@ -99,6 +104,7 @@ struct IntStack: Container {
     var items = [Int]()
     mutating func push(_ item: Int) {
         items.append(item)
+        
     }
     mutating func pop() -> Int {
         return items.removeLast()
@@ -118,17 +124,71 @@ struct IntStack: Container {
 }
 
 
+//在关联类型约束里使用协议
+//protocol SuffixableContainer: Container {
+//    associatedtype Suffix: SuffixableContainer where Suffix.Item == Item
+//    func suffix(_ size: Int) -> Int
+//}
+
+
 
 // # 泛型where分句
+func allItemMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherContainer: C2) -> Bool where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
+    if someContainer.count != anotherContainer.count {
+        return false
+    }
+    
+    for i in 0..<someContainer.count {
+        if someContainer[i] != anotherContainer[i] {
+            return false
+        }
+    }
+    
+    return true
+}
+
 
 
 
 // # 带有泛型where分句的扩展
+extension Stack where Element: Equatable {
+    func isTop(_ item: Element) -> Bool {
+        guard let topItem = items.last else {
+            return false
+        }
+        return topItem == item
+    }
+}
 
+//指定类型
+extension Container where ItemType == Double {
+    
+}
 
 
 // # 关联类型的泛型where分句
+protocol Container1 {
+    associatedtype Item
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+    
+    associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
+    func makeIterator() -> Iterator
+}
 
 
 
 // # 泛型下标
+extension Container1 {
+    //泛型形式参数Indices是遵循Sequence协议的类型
+    subscript<Indices: Sequence>(indices: Indices) -> [Item]
+        //where分句要求序列的遍历器必须遍历Int类型的元素，保证序列中的索引都是作为容器索引的相同类型
+        where Indices.Iterator.Element == Int {
+            var result = [Item]()
+            for index in indices {
+                result.append(self[index])
+            }
+            return result
+    }
+}
