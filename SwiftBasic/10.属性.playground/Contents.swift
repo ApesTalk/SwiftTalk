@@ -60,7 +60,7 @@ let initialSquareCenter = square.center
 square.center = Point(x: 15.0, y: 15.0)
 print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
-//简写设置器setter声明
+//简写设置器声明
 struct AlternativeRect {
     var origin = Point()
     var size = Size()

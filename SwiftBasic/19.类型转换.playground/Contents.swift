@@ -26,7 +26,6 @@ class Song: MediaItem {
     }
 }
 
-
 let library = [
     Movie(name: "Casablanca", director: "Michael Crtiz"),
     Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),

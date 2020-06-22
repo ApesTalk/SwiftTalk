@@ -1,6 +1,13 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
+let ss = "abcdef"
+let suss = ss[ss.index(ss.startIndex, offsetBy: 3)]
+let x = ss.firstIndex(of: "c")
+let index1 = ss.distance(from: ss.startIndex, to: x!)
+print("index of 'c' is \(index1)")
+
+
 // # 字符串字面量
 //注意空格：某一行的空格超过"""的范围才算，"""之前的空格将自动忽略.
 let quotation = """
