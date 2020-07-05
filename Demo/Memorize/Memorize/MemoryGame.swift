@@ -9,8 +9,10 @@
 import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
-    var cards: Array<Card>
-    var indexOfTheOneAndOnlyFaceUpCard: Int? {
+    //外部可读但不能写
+    private(set) var cards: Array<Card>
+    
+    private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
 //            var faceUps = cards.indices.filter { (index) -> Bool in
 //                return cards[index].isFaceUp

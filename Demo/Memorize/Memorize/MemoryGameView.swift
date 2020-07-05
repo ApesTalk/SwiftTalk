@@ -25,7 +25,7 @@ struct MemoryGameView: View {
 //            .padding()
 //            .foregroundColor(Color.red)
         
-        //HStack 在水平坐标轴上对齐所以子视图
+        //HStack 在水平坐标轴上对齐所有子视图
 //        HStack(content: {
 //            Text("🐶")
 //            Text("🐱")
@@ -101,7 +101,7 @@ struct CardView: View {
         }
     }
     
-    func body(for size: CGSize) -> some View {
+    private func body(for size: CGSize) -> some View {
         ZStack {
             if card.isFaceUp {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
@@ -118,10 +118,10 @@ struct CardView: View {
     }
     
     //MARK - Drawing constants
-    let cornerRadius: CGFloat = 10.0
-    let edgeLineWidth: CGFloat = 3.0
+    private let cornerRadius: CGFloat = 10.0
+    private let edgeLineWidth: CGFloat = 3.0
     
-    func fontSize(for size: CGSize) -> CGFloat {
+    private func fontSize(for size: CGSize) -> CGFloat {
         return min(size.width, size.height) * 0.75
     }
 }

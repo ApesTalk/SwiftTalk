@@ -33,11 +33,11 @@ class EmojiMemoryGame: ObservableObject {
 //    private(set) var model: MemoryGame<String> = MemoryGame<String>(numberOfPairsOfCards: 2) { _ in "🐷" }
 
     //防止外部更改model
-    @Published private(set) var model: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
+    @Published private var model: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
     
     //如果不是static函数，直接private(set) var model: MemoryGame<String> = createMemoryGame()是会报错的，self还没初始化完成可用就调用了其实例方法
     //Cannot use instance member 'createMemoryGame' within property initializer; property initializers run before 'self' is available
-    static func createMemoryGame() -> MemoryGame<String> {
+    private static func createMemoryGame() -> MemoryGame<String> {
         let emojis = ["🐁", "🐂", "🐅", "🐇", "🐉", "🐍", "🐎", "🐏", "🐒", "🐓", "🐕", "🐖"]
         return MemoryGame<String>(numberOfPairsOfCards: emojis.count) { pairIndex in
             return emojis[pairIndex]
