@@ -101,33 +101,35 @@ struct CardView: View {
         }
     }
     
+    //ViewBuilder把许多具有相同特点的view封装起来，并且分离逻辑代码和视图，提高代码的可复用性，增强可读性。
+    @ViewBuilder
     private func body(for size: CGSize) -> some View {
-        ZStack {
-            if card.isFaceUp {
-                RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
-                Text(card.content)
-            } else {
-                if !card.isMatched {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill()
-                }
-                //没有内容->不会绘制
+        if card.isFaceUp || !card.isMatched {
+            ZStack {
+                //绘图 closewise概念是反着来的？
+                Pie(startAngle: Angle.degrees(0-90), endAngle: Angle.degrees(110-90), clockwise: true)
+                    .padding(5)
+                    .opacity(0.4)
+                Text(card.content).font(Font.system(size: fontSize(for: size)))
             }
+            .modifier(Cardify(isFaceUp: card.isFaceUp))
         }
-        .font(Font.system(size: fontSize(for: size)))
     }
     
     //MARK - Drawing constants
-    private let cornerRadius: CGFloat = 10.0
-    private let edgeLineWidth: CGFloat = 3.0
+//    private let cornerRadius: CGFloat = 10.0
+//    private let edgeLineWidth: CGFloat = 3.0
     
     private func fontSize(for size: CGSize) -> CGFloat {
-        return min(size.width, size.height) * 0.75
+        return min(size.width, size.height) * 0.65
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MemoryGameView(viewModel: EmojiMemoryGame())
+        //方便调整代码后通过右侧的cavas实时预览效果
+        let game = EmojiMemoryGame()
+        game.choose(card: game.cards[0])
+        return MemoryGameView(viewModel: game)
     }
 }

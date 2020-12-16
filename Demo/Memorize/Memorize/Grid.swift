@@ -24,13 +24,13 @@ struct Grid<Item, ItemView>: View where Item: Identifiable, ItemView: View {
         }
     }
     
-    func body(for layout: GridLayout) -> some View {
+    private func body(for layout: GridLayout) -> some View {
         ForEach(items) {item in
             self.body(for: item, in: layout)
         }
     }
     
-    func body(for item: Item, in layout: GridLayout) -> some View {
+    private func body(for item: Item, in layout: GridLayout) -> some View {
         let index = items.firstIndex(matching: item)
         //如果这样的话，在index为nil时不知道该怎么返回 some View，利用Group，其中如果没有内容也不会编译失败
 //        if index != nil {
